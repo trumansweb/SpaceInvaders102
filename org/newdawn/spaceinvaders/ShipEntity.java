@@ -52,12 +52,12 @@ public class ShipEntity extends Entity {
 		if ((dx > 0) && (x > 750)) {
 			return;
 		}
-		// if we're moving left and have reached the left hand side
+		// if we're moving up and have reached the left top
 		// of the screen, don't move
 		if ((dy < 0) && (y < 10)) {
 			return;
 		}
-		// if we're moving right and have reached the right hand side
+		// if we're moving down and have reached the bottom
 		// of the screen, don't move
 		if ((dy > 0) && (y > 550)) {
 			return;

@@ -3,6 +3,8 @@ package org.newdawn.spaceinvaders;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,7 +22,7 @@ public class GameExtension extends Game implements MouseListener {
 	
 	/** True if the right mouse key is currently pressed */
 	private boolean Fire2Pressed = false;
-	/** True if the right mouse key is currently pressed */
+	/** True if the "p" key is currently pressed */
 	private boolean PausePressed = false;
 	/** True if the up cursor key is currently pressed */
 	private boolean upPressed = false;
@@ -28,6 +30,10 @@ public class GameExtension extends Game implements MouseListener {
 	private boolean downPressed = false;
 	/** Current Level */
 	private int level = 1;
+	/** window size */
+	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	int width = gd.getDisplayMode().getWidth();
+	int height = gd.getDisplayMode().getHeight();
 	
 	public GameExtension() {
 		System.out.println("Extension loaded");
@@ -37,22 +43,24 @@ public class GameExtension extends Game implements MouseListener {
 		for(KeyListener l : super.getKeyListeners()) super.removeKeyListener(l);
 		// listen only this class
 		addKeyListener(new KeyInputHandler());
+		// speed up a bit
 		setFiringInterval(100);
 		
 		setWindowTitle("Space Invaders 102.1");
+		
+		// remove container the super constructor loads
 		getContainer().remove(getContainer());
 		// create a frame to contain our game
 		setContainer(new JFrame("Space Invaders 102.1"));
-		
+		getContainer().setUndecorated(true);
 		// get hold the content of the frame and set up the resolution of the game
 		JPanel panel = (JPanel) getContainer().getContentPane();
-		panel.setPreferredSize(new Dimension(800,600));
+		panel.setPreferredSize(new Dimension(width, height));
 		panel.setLayout(null);
 		
 		// setup our canvas size and put it into the content of the frame
-		setBounds(0,0,800,600);
+		setBounds(0,0,width,height);
 		panel.add(this);
-		
 		// Tell AWT not to bother repainting our canvas since we're
 		// going to do that our self in accelerated mode
 		setIgnoreRepaint(true);
@@ -89,7 +97,7 @@ public class GameExtension extends Game implements MouseListener {
 	 */
 	private void initEntities() {
 		// create the player ship and place it roughly in the center of the screen
-		setShip(new ShipEntity(this,"sprites/ship.gif",370,550));
+		setShip(new ShipEntity(this,"sprites/ship.gif",width/2-25,height-50));
 		getEntities().add(getShip());
 		
 		// create a block of aliens (5 rows, by 12 aliens, spaced evenly)
@@ -319,7 +327,7 @@ public class GameExtension extends Game implements MouseListener {
 			// surface and blank it out
 			Graphics2D g = (Graphics2D) getStrategy().getDrawGraphics();
 			g.setColor(Color.black);
-			g.fillRect(0,0,800,600);
+			g.fillRect(0,0,width,height);
 			
 			// cycle round asking each entity to move itself
 			if (!isWaitingForKeyPress() && !isPausePressed()) {
@@ -372,15 +380,15 @@ public class GameExtension extends Game implements MouseListener {
 			// current message 
 			if (isWaitingForKeyPress()) {
 				g.setColor(Color.white);
-				g.drawString(getMessage(),(800-g.getFontMetrics().stringWidth(getMessage()))/2,250);
-				g.drawString("Press any key",(800-g.getFontMetrics().stringWidth("Press any key"))/2,300);
+				g.drawString(getMessage(),(width-g.getFontMetrics().stringWidth(getMessage()))/2,250);
+				g.drawString("Press any key",(width-g.getFontMetrics().stringWidth("Press any key"))/2,300);
 			}
 			if (isPausePressed()) {
 				g.setColor(Color.white);
-				g.drawString("Pause",(800-g.getFontMetrics().stringWidth("Pause"))/2,300);
+				g.drawString("Pause",(width-g.getFontMetrics().stringWidth("Pause"))/2,300);
 			}
 			g.setColor(Color.white);
-			g.drawString("Level "+getLevel(),(800-g.getFontMetrics().stringWidth("Level "+getLevel()))/2,20);
+			g.drawString("Level "+getLevel(),(width-g.getFontMetrics().stringWidth("Level "+getLevel()))/2,20);
 		
 			// finally, we've completed drawing so clear up the graphics
 			// and flip the buffer over

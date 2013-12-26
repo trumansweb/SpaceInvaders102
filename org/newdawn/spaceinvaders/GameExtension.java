@@ -32,8 +32,14 @@ public class GameExtension extends Game implements MouseListener {
 	private int level = 1;
 	/** window size */
 	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-	int width = gd.getDisplayMode().getWidth();
-	int height = gd.getDisplayMode().getHeight();
+	/** window width */
+	private int width = gd.getDisplayMode().getWidth();
+	/** window height */
+	private int height = gd.getDisplayMode().getHeight();
+	/** game container width */
+	private int cWidth = 800;
+	/** game container height */
+	private int cHeight = 600;
 	
 	public GameExtension() {
 		System.out.println("Extension loaded");
@@ -49,9 +55,11 @@ public class GameExtension extends Game implements MouseListener {
 		setWindowTitle("Space Invaders 102.1");
 		
 		// remove container the super constructor loads
+		getContainer().removeAll();
 		getContainer().remove(getContainer());
 		// create a frame to contain our game
 		setContainer(new JFrame("Space Invaders 102.1"));
+		// remove window border
 		getContainer().setUndecorated(true);
 		// get hold the content of the frame and set up the resolution of the game
 		JPanel panel = (JPanel) getContainer().getContentPane();
@@ -59,7 +67,7 @@ public class GameExtension extends Game implements MouseListener {
 		panel.setLayout(null);
 		
 		// setup our canvas size and put it into the content of the frame
-		setBounds(0,0,width,height);
+		setBounds((width-800)/2,(height-600)/2,width,height);
 		panel.add(this);
 		// Tell AWT not to bother repainting our canvas since we're
 		// going to do that our self in accelerated mode
@@ -97,7 +105,7 @@ public class GameExtension extends Game implements MouseListener {
 	 */
 	private void initEntities() {
 		// create the player ship and place it roughly in the center of the screen
-		setShip(new ShipEntity(this,"sprites/ship.gif",width/2-25,height-50));
+		setShip(new ShipEntity(this,"sprites/ship.gif",cWidth/2-25,cHeight-50));
 		getEntities().add(getShip());
 		
 		// create a block of aliens (5 rows, by 12 aliens, spaced evenly)
@@ -327,7 +335,7 @@ public class GameExtension extends Game implements MouseListener {
 			// surface and blank it out
 			Graphics2D g = (Graphics2D) getStrategy().getDrawGraphics();
 			g.setColor(Color.black);
-			g.fillRect(0,0,width,height);
+			g.fillRect(0,0,800,600);
 			
 			// cycle round asking each entity to move itself
 			if (!isWaitingForKeyPress() && !isPausePressed()) {
@@ -380,15 +388,15 @@ public class GameExtension extends Game implements MouseListener {
 			// current message 
 			if (isWaitingForKeyPress()) {
 				g.setColor(Color.white);
-				g.drawString(getMessage(),(width-g.getFontMetrics().stringWidth(getMessage()))/2,250);
-				g.drawString("Press any key",(width-g.getFontMetrics().stringWidth("Press any key"))/2,300);
+				g.drawString(getMessage(),(cWidth-g.getFontMetrics().stringWidth(getMessage()))/2,250);
+				g.drawString("Press any key",(cWidth-g.getFontMetrics().stringWidth("Press any key"))/2,300);
 			}
 			if (isPausePressed()) {
 				g.setColor(Color.white);
-				g.drawString("Pause",(width-g.getFontMetrics().stringWidth("Pause"))/2,300);
+				g.drawString("Pause",(cWidth-g.getFontMetrics().stringWidth("Pause"))/2,300);
 			}
 			g.setColor(Color.white);
-			g.drawString("Level "+getLevel(),(width-g.getFontMetrics().stringWidth("Level "+getLevel()))/2,20);
+			g.drawString("Level "+getLevel(),(cWidth-g.getFontMetrics().stringWidth("Level "+getLevel()))/2,20);
 		
 			// finally, we've completed drawing so clear up the graphics
 			// and flip the buffer over
@@ -490,6 +498,46 @@ public class GameExtension extends Game implements MouseListener {
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public GraphicsDevice getGd() {
+		return gd;
+	}
+
+	public void setGd(GraphicsDevice gd) {
+		this.gd = gd;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getcWidth() {
+		return cWidth;
+	}
+
+	public void setcWidth(int cWidth) {
+		this.cWidth = cWidth;
+	}
+
+	public int getcHeight() {
+		return cHeight;
+	}
+
+	public void setcHeight(int cHeight) {
+		this.cHeight = cHeight;
 	}
 
     

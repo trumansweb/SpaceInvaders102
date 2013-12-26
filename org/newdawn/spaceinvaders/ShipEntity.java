@@ -1,5 +1,8 @@
 package org.newdawn.spaceinvaders;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
 /**
  * The entity that represents the players ship
  * 
@@ -8,7 +11,16 @@ package org.newdawn.spaceinvaders;
 public class ShipEntity extends Entity {
 	/** The game in which the ship exists */
 	private Game game;
-	
+	/** window size */
+	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	/** window width */
+	private int width = gd.getDisplayMode().getWidth();
+	/** window height */
+	private int height = gd.getDisplayMode().getHeight();
+	/** game container width */
+	private int cWidth = 800;
+	/** game container height */
+	private int cHeight = 600;
 	/**
 	 * Create a new entity to represent the players ship
 	 *  
@@ -38,6 +50,16 @@ public class ShipEntity extends Entity {
 		// if we're moving right and have reached the right hand side
 		// of the screen, don't move
 		if ((dx > 0) && (x > 750)) {
+			return;
+		}
+		// if we're moving left and have reached the left hand side
+		// of the screen, don't move
+		if ((dy < 0) && (y < 10)) {
+			return;
+		}
+		// if we're moving right and have reached the right hand side
+		// of the screen, don't move
+		if ((dy > 0) && (y > 550)) {
 			return;
 		}
 		

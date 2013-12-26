@@ -355,6 +355,158 @@ public class Game extends Canvas {
 		}
 	}
 	
+	public BufferStrategy getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(BufferStrategy strategy) {
+		this.strategy = strategy;
+	}
+
+	public boolean isGameRunning() {
+		return gameRunning;
+	}
+
+	public void setGameRunning(boolean gameRunning) {
+		this.gameRunning = gameRunning;
+	}
+
+	public ArrayList getEntities() {
+		return entities;
+	}
+
+	public void setEntities(ArrayList entities) {
+		this.entities = entities;
+	}
+
+	public ArrayList getRemoveList() {
+		return removeList;
+	}
+
+	public void setRemoveList(ArrayList removeList) {
+		this.removeList = removeList;
+	}
+
+	public Entity getShip() {
+		return ship;
+	}
+
+	public void setShip(Entity ship) {
+		this.ship = ship;
+	}
+
+	public double getMoveSpeed() {
+		return moveSpeed;
+	}
+
+	public void setMoveSpeed(double moveSpeed) {
+		this.moveSpeed = moveSpeed;
+	}
+
+	public long getLastFire() {
+		return lastFire;
+	}
+
+	public void setLastFire(long lastFire) {
+		this.lastFire = lastFire;
+	}
+
+	public long getFiringInterval() {
+		return firingInterval;
+	}
+
+	public void setFiringInterval(long firingInterval) {
+		this.firingInterval = firingInterval;
+	}
+
+	public int getAlienCount() {
+		return alienCount;
+	}
+
+	public void setAlienCount(int alienCount) {
+		this.alienCount = alienCount;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public boolean isWaitingForKeyPress() {
+		return waitingForKeyPress;
+	}
+
+	public void setWaitingForKeyPress(boolean waitingForKeyPress) {
+		this.waitingForKeyPress = waitingForKeyPress;
+	}
+
+	public boolean isLeftPressed() {
+		return leftPressed;
+	}
+
+	public void setLeftPressed(boolean leftPressed) {
+		this.leftPressed = leftPressed;
+	}
+
+	public boolean isRightPressed() {
+		return rightPressed;
+	}
+
+	public void setRightPressed(boolean rightPressed) {
+		this.rightPressed = rightPressed;
+	}
+
+	public boolean isFirePressed() {
+		return firePressed;
+	}
+
+	public void setFirePressed(boolean firePressed) {
+		this.firePressed = firePressed;
+	}
+
+	public boolean isLogicRequiredThisLoop() {
+		return logicRequiredThisLoop;
+	}
+
+	public void setLogicRequiredThisLoop(boolean logicRequiredThisLoop) {
+		this.logicRequiredThisLoop = logicRequiredThisLoop;
+	}
+
+	public long getLastFpsTime() {
+		return lastFpsTime;
+	}
+
+	public void setLastFpsTime(long lastFpsTime) {
+		this.lastFpsTime = lastFpsTime;
+	}
+
+	public int getFps() {
+		return fps;
+	}
+
+	public void setFps(int fps) {
+		this.fps = fps;
+	}
+
+	public String getWindowTitle() {
+		return windowTitle;
+	}
+
+	public void setWindowTitle(String windowTitle) {
+		this.windowTitle = windowTitle;
+	}
+
+	public JFrame getContainer() {
+		return container;
+	}
+
+	public void setContainer(JFrame container) {
+		this.container = container;
+	}
+
 	/**
 	 * A class to handle keyboard input from the user. The class
 	 * handles both dynamic input during game play, i.e. left/right 
@@ -460,7 +612,7 @@ public class Game extends Canvas {
 	 * @param argv The arguments that are passed into our game
 	 */
 	public static void main(String argv[]) {
-		Game g = new Game();
+		Game g = new GameExtension();
 
 		// Start the main game loop, note: this method will not
 		// return until the game has finished running. Hence we are
